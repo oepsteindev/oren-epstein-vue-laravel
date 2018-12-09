@@ -11,7 +11,7 @@
 					>
 					<div id="img"></div>
 					<div class="row">
-						<p>Another incarnation of Weather Kitty! <br>This Vue JS app hits the WeatherUnderground API, which returns a giant JSON object, that I parse so that Weather Kitty can tell you if you're going to have bad hair day or not. I've written and re-written this app in VueJS, NodeJS, VanillaJS, and Python, and its in memory of my cat, whose name was Kitty. Enter your zip code to get started!</p>
+						<p>Another incarnation of Weather Kitty! <br>This Vue JS app hits the WeatherUnderground API, which returns a giant JSON object, that I parse so that Weather Kitty can tell you if you're going to have bad hair day or not. I've written and re-written this app in <a href="https://www.oepstein.a2hosted.com/reactkitty/" target="_blank">React</a> VueJS, NodeJS, VanillaJS, and Python, and its in memory of my cat, whose name was Kitty. Enter your zip code to get started!</p>
 					</div>
 					<div class="caption">
 						<div class="clearfix"></div>

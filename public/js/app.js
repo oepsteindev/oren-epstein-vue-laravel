@@ -55873,7 +55873,20 @@ var staticRenderFns = [
         _vm._v("Another incarnation of Weather Kitty! "),
         _c("br"),
         _vm._v(
-          "This Vue JS app hits the WeatherUnderground API, which returns a giant JSON object, that I parse so that Weather Kitty can tell you if you're going to have bad hair day or not. I've written and re-written this app in VueJS, NodeJS, VanillaJS, and Python, and its in memory of my cat, whose name was Kitty. Enter your zip code to get started!"
+          "This Vue JS app hits the WeatherUnderground API, which returns a giant JSON object, that I parse so that Weather Kitty can tell you if you're going to have bad hair day or not. I've written and re-written this app in "
+        ),
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "https://www.oepstein.a2hosted.com/reactkitty/",
+              target: "_blank"
+            }
+          },
+          [_vm._v("React")]
+        ),
+        _vm._v(
+          " VueJS, NodeJS, VanillaJS, and Python, and its in memory of my cat, whose name was Kitty. Enter your zip code to get started!"
         )
       ])
     ])
