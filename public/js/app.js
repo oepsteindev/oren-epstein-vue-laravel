@@ -48200,9 +48200,9 @@ VueMasonryPlugin.install = function (Vue, options) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * Masonry v4.2.0
+ * Masonry v4.2.2
  * Cascading grid layout library
- * http://masonry.desandro.com
+ * https://masonry.desandro.com
  * MIT License
  * by David DeSandro
  */
@@ -50647,9 +50647,9 @@ return ImagesLoaded;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
-  * vue-router v3.0.1
-  * (c) 2017 Evan You
+/*!
+  * vue-router v3.0.2
+  * (c) 2018 Evan You
   * @license MIT
   */
 /*  */
@@ -50670,8 +50670,15 @@ function isError (err) {
   return Object.prototype.toString.call(err).indexOf('Error') > -1
 }
 
+function extend (a, b) {
+  for (var key in b) {
+    a[key] = b[key];
+  }
+  return a
+}
+
 var View = {
-  name: 'router-view',
+  name: 'RouterView',
   functional: true,
   props: {
     name: {
@@ -50685,6 +50692,7 @@ var View = {
     var parent = ref.parent;
     var data = ref.data;
 
+    // used by devtools to display a router-view badge
     data.routerView = true;
 
     // directly use parent context's createElement() function
@@ -50759,7 +50767,7 @@ var View = {
 
     return h(component, data, children)
   }
-};
+}
 
 function resolveProps (route, config) {
   switch (typeof config) {
@@ -50780,13 +50788,6 @@ function resolveProps (route, config) {
         );
       }
   }
-}
-
-function extend (to, from) {
-  for (var key in from) {
-    to[key] = from[key];
-  }
-  return to
 }
 
 /*  */
@@ -50886,7 +50887,6 @@ function stringifyQuery (obj) {
 }
 
 /*  */
-
 
 var trailingSlashRE = /\/?$/;
 
@@ -51030,7 +51030,7 @@ var toTypes = [String, Object];
 var eventTypes = [String, Array];
 
 var Link = {
-  name: 'router-link',
+  name: 'RouterLink',
   props: {
     to: {
       type: toTypes,
@@ -51065,17 +51065,17 @@ var Link = {
     var globalExactActiveClass = router.options.linkExactActiveClass;
     // Support global empty active class
     var activeClassFallback = globalActiveClass == null
-            ? 'router-link-active'
-            : globalActiveClass;
+      ? 'router-link-active'
+      : globalActiveClass;
     var exactActiveClassFallback = globalExactActiveClass == null
-            ? 'router-link-exact-active'
-            : globalExactActiveClass;
+      ? 'router-link-exact-active'
+      : globalExactActiveClass;
     var activeClass = this.activeClass == null
-            ? activeClassFallback
-            : this.activeClass;
+      ? activeClassFallback
+      : this.activeClass;
     var exactActiveClass = this.exactActiveClass == null
-            ? exactActiveClassFallback
-            : this.exactActiveClass;
+      ? exactActiveClassFallback
+      : this.exactActiveClass;
     var compareTarget = location.path
       ? createRoute(null, location, null, router)
       : route;
@@ -51115,7 +51115,6 @@ var Link = {
       if (a) {
         // in case the <a> is a static node
         a.isStatic = false;
-        var extend = _Vue.util.extend;
         var aData = a.data = extend({}, a.data);
         aData.on = on;
         var aAttrs = a.data.attrs = extend({}, a.data.attrs);
@@ -51128,7 +51127,7 @@ var Link = {
 
     return h(this.tag, data, this.$slots.default)
   }
-};
+}
 
 function guardEvent (e) {
   // don't redirect with control keys
@@ -51206,8 +51205,8 @@ function install (Vue) {
     get: function get () { return this._routerRoot._route }
   });
 
-  Vue.component('router-view', View);
-  Vue.component('router-link', Link);
+  Vue.component('RouterView', View);
+  Vue.component('RouterLink', Link);
 
   var strats = Vue.config.optionMergeStrategies;
   // use the same hook merging strategy for route hooks
@@ -51717,7 +51716,6 @@ function pathToRegexp (path, keys, options) {
 
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
-
 pathToRegexp_1.parse = parse_1;
 pathToRegexp_1.compile = compile_1;
 pathToRegexp_1.tokensToFunction = tokensToFunction_1;
@@ -51913,7 +51911,6 @@ function normalizePath (path, parent, strict) {
 
 /*  */
 
-
 function normalizeLocation (
   raw,
   current,
@@ -51928,9 +51925,9 @@ function normalizeLocation (
 
   // relative params
   if (!next.path && next.params && current) {
-    next = assign({}, next);
+    next = extend({}, next);
     next._normalized = true;
-    var params = assign(assign({}, current.params), next.params);
+    var params = extend(extend({}, current.params), next.params);
     if (current.name) {
       next.name = current.name;
       next.params = params;
@@ -51968,14 +51965,8 @@ function normalizeLocation (
   }
 }
 
-function assign (a, b) {
-  for (var key in b) {
-    a[key] = b[key];
-  }
-  return a
-}
-
 /*  */
+
 
 
 function createMatcher (
@@ -52045,8 +52036,8 @@ function createMatcher (
   ) {
     var originalRedirect = record.redirect;
     var redirect = typeof originalRedirect === 'function'
-        ? originalRedirect(createRoute(record, location, null, router))
-        : originalRedirect;
+      ? originalRedirect(createRoute(record, location, null, router))
+      : originalRedirect;
 
     if (typeof redirect === 'string') {
       redirect = { path: redirect };
@@ -52160,7 +52151,8 @@ function matchRoute (
     var key = regex.keys[i - 1];
     var val = typeof m[i] === 'string' ? decodeURIComponent(m[i]) : m[i];
     if (key) {
-      params[key.name] = val;
+      // Fix #1994: using * with props: true generates a param named 0
+      params[key.name || 'pathMatch'] = val;
     }
   }
 
@@ -52173,12 +52165,12 @@ function resolveRecordPath (path, record) {
 
 /*  */
 
-
 var positionStore = Object.create(null);
 
 function setupScroll () {
   // Fix for #1585 for Firefox
-  window.history.replaceState({ key: getStateKey() }, '');
+  // Fix for #2195 Add optional third attribute to workaround a bug in safari https://bugs.webkit.org/show_bug.cgi?id=182678
+  window.history.replaceState({ key: getStateKey() }, '', window.location.href.replace(window.location.origin, ''));
   window.addEventListener('popstate', function (e) {
     saveScrollPosition();
     if (e.state && e.state.key) {
@@ -52209,7 +52201,7 @@ function handleScroll (
   // wait until re-render finishes before scrolling
   router.app.$nextTick(function () {
     var position = getScrollPosition();
-    var shouldScroll = behavior(to, from, isPop ? position : null);
+    var shouldScroll = behavior.call(router, to, from, isPop ? position : null);
 
     if (!shouldScroll) {
       return
@@ -52771,7 +52763,10 @@ function poll (
   key,
   isValid
 ) {
-  if (instances[key]) {
+  if (
+    instances[key] &&
+    !instances[key]._isBeingDestroyed // do not reuse being destroyed instance
+  ) {
     cb(instances[key]);
   } else if (isValid()) {
     setTimeout(function () {
@@ -52782,7 +52777,6 @@ function poll (
 
 /*  */
 
-
 var HTML5History = (function (History$$1) {
   function HTML5History (router, base) {
     var this$1 = this;
@@ -52790,8 +52784,9 @@ var HTML5History = (function (History$$1) {
     History$$1.call(this, router, base);
 
     var expectScroll = router.options.scrollBehavior;
+    var supportsScroll = supportsPushState && expectScroll;
 
-    if (expectScroll) {
+    if (supportsScroll) {
       setupScroll();
     }
 
@@ -52807,7 +52802,7 @@ var HTML5History = (function (History$$1) {
       }
 
       this$1.transitionTo(location, function (route) {
-        if (expectScroll) {
+        if (supportsScroll) {
           handleScroll(router, route, current, true);
         }
       });
@@ -52861,7 +52856,7 @@ var HTML5History = (function (History$$1) {
 }(History));
 
 function getLocation (base) {
-  var path = window.location.pathname;
+  var path = decodeURI(window.location.pathname);
   if (base && path.indexOf(base) === 0) {
     path = path.slice(base.length);
   }
@@ -52869,7 +52864,6 @@ function getLocation (base) {
 }
 
 /*  */
-
 
 var HashHistory = (function (History$$1) {
   function HashHistory (router, base, fallback) {
@@ -52980,7 +52974,7 @@ function getHash () {
   // consistent across browsers - Firefox will pre-decode it!
   var href = window.location.href;
   var index = href.indexOf('#');
-  return index === -1 ? '' : href.slice(index + 1)
+  return index === -1 ? '' : decodeURI(href.slice(index + 1))
 }
 
 function getUrl (path) {
@@ -53007,7 +53001,6 @@ function replaceHash (path) {
 }
 
 /*  */
-
 
 var AbstractHistory = (function (History$$1) {
   function AbstractHistory (router, base) {
@@ -53066,6 +53059,8 @@ var AbstractHistory = (function (History$$1) {
 }(History));
 
 /*  */
+
+
 
 var VueRouter = function VueRouter (options) {
   if ( options === void 0 ) options = {};
@@ -53263,7 +53258,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.0.1';
+VueRouter.version = '3.0.2';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -54079,7 +54074,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.red{\n\tcolor:red;\n}\n.green{\n\tcolor:green;\n}\n", ""]);
+exports.push([module.i, "\n.red{\n\tcolor:red;\n}\n.green{\n\tcolor:green;\n}\n.spaceout{\n\tmargin:5px;\n}\n", ""]);
 
 // exports
 
@@ -54099,7 +54094,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
 //
 //
 //
@@ -54176,7 +54170,7 @@ var jsonp = __webpack_require__(68);
 	methods: {
 		getWeather: function () {
 			var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-				var self, zipcode, resp;
+				var self, zipcode, location_response, location_json, ld, weather_response, weather_json, wd, bad_hair_cat, good_hair_cat, dewpoint, city, temp_f, humidity, image, desc, temp, color;
 				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
@@ -54197,49 +54191,64 @@ var jsonp = __webpack_require__(68);
 								this.errors = [];
 
 							case 9:
-								try {
+								_context.prev = 9;
+								_context.next = 12;
+								return fetch('http://dataservice.accuweather.com/locations/v1/cities/search?apikey=' + __WEBPACK_IMPORTED_MODULE_1__env_dotenv_js__["a" /* default */].VUE_WUAPI + '&q=33614&language=en-us');
 
-									// 		axios.defaults.headers.common = {};
-									// axios.defaults.headers.common.accept = 'application/json';
-									// 			const xresp = await axios.get('https://api.wunderground.com/api/'+dotenv.VUE_WUAPI+'/forecast/geolookup/conditions/q/'+zipcode+'/format.json')
-									// console.log(xresp);
+							case 12:
+								location_response = _context.sent;
+								_context.next = 15;
+								return location_response.json();
 
-									resp = jsonp('https://api.wunderground.com/api/' + __WEBPACK_IMPORTED_MODULE_1__env_dotenv_js__["a" /* default */].VUE_WUAPI + '/forecast/geolookup/conditions/q/' + zipcode + '/format.json', { headers: { 'Content-Type': null } }, function (err, data) {
-										if (err) {
-											console.error(err.message);
-										} else {
-											console.log(data);
+							case 15:
+								location_json = _context.sent;
+								ld = location_json[0];
+								_context.next = 19;
+								return fetch('http://dataservice.accuweather.com/currentconditions/v1/33614?apikey=' + __WEBPACK_IMPORTED_MODULE_1__env_dotenv_js__["a" /* default */].VUE_WUAPI + '&language=en-us&details=true');
 
-											console.log(data);
-											var bad_hair_cat = 'http://img06.deviantart.net/2c2a/i/2013/236/5/5/doodle_237___persian_cat_by_giovannag-d6jlpei.jpg';
+							case 19:
+								weather_response = _context.sent;
+								_context.next = 22;
+								return weather_response.json();
 
-											var good_hair_cat = 'http://i.imgur.com/ZiEBSak.jpg?1';
-											var location = data['location']['city'];
-											var temp_f = data['current_observation']['temp_f'];
-											var dewpoint = data['current_observation']['dewpoint_string'];
-											var dewpoint_f = data['current_observation']['dewpoint_f'];
-											var humidity = data['current_observation']['relative_humidity'];
-											var icon_url = data['current_observation']['icon_url'];
-											var image = dewpoint_f > 65 ? bad_hair_cat : good_hair_cat;
-											var desc = dewpoint_f > 65 ? "Bad hair day! Run!" : "Good hair day, good kitty!";
-											var color = dewpoint_f > 65 ? "red" : "green";
-											self.dewpoint.img = image;
-											self.dewpoint.desc = desc;
-											self.dewpoint.temp = "Current temperature in " + location + " is: " + temp_f;
-											self.dewpoint.dew = dewpoint;
-											self.dewpoint.humidity = humidity;
-											self.dewpoint.sky = icon_url;
-											self.dewpoint.color = color;
-										}
-									});
-								} catch (e) {}
+							case 22:
+								weather_json = _context.sent;
+								wd = weather_json[0];
+								bad_hair_cat = "http://img06.deviantart.net/2c2a/i/2013/236/5/5/doodle_237___persian_cat_by_giovannag-d6jlpei.jpg";
+								good_hair_cat = "http://i.imgur.com/ZiEBSak.jpg?1";
+								dewpoint = wd.DewPoint.Imperial.Value;
+								city = ld.EnglishName;
+								temp_f = wd.Temperature.Imperial.Value;
+								humidity = wd.RelativeHumidity;
+								image = dewpoint > 65 ? bad_hair_cat : good_hair_cat;
+								desc = dewpoint > 65 ? "Bad hair day! Run!" : "Good hair day, good kitty!";
+								temp = "The Current temperature in " + city + " is: " + temp_f;
+								color = dewpoint > 65 ? "red" : "green";
 
-							case 10:
+
+								self.dewpoint.img = image;
+								self.dewpoint.desc = desc;
+								self.dewpoint.temp = "Current temperature in " + ld.ParentCity.EnglishName + " is: " + temp_f;
+								self.dewpoint.dew = dewpoint;
+								self.dewpoint.humidity = temp_f;
+								self.dewpoint.color = color;
+								// self.dewpoint.sky = icon_url;
+
+								_context.next = 45;
+								break;
+
+							case 42:
+								_context.prev = 42;
+								_context.t0 = _context['catch'](9);
+
+								alert(_context.t0);
+
+							case 45:
 							case 'end':
 								return _context.stop();
 						}
 					}
-				}, _callee, this);
+				}, _callee, this, [[9, 42]]);
 			}));
 
 			function getWeather() {
@@ -55038,7 +55047,7 @@ if (hadRuntime) {
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = ({
-	VUE_WUAPI: 'd5b402928887a79d'
+	VUE_WUAPI: 'e9T9F0WpM34dCUFwXBr846u96lqZPfoW'
 });
 
 /***/ }),
@@ -55750,6 +55759,7 @@ var render = function() {
                 _c("div", { attrs: { id: "info" } }, [
                   this.dewpoint.img
                     ? _c("img", {
+                        staticClass: "spaceout",
                         attrs: {
                           src: this.dewpoint.img,
                           height: "200",
@@ -55759,7 +55769,7 @@ var render = function() {
                     : _vm._e(),
                   _vm._v(" "),
                   this.dewpoint.temp
-                    ? _c("div", [
+                    ? _c("div", { staticClass: "spaceout" }, [
                         _vm._v(
                           "\n\t\t\t\t\t\t\t\t" +
                             _vm._s(this.dewpoint.temp) +
@@ -55769,9 +55779,10 @@ var render = function() {
                     : _vm._e(),
                   _vm._v(" "),
                   this.dewpoint.dew
-                    ? _c("div", [
-                        _c("p"),
-                        _vm._v("\n\t\t\t\t\t\t\tCurrent Dewpoint: "),
+                    ? _c("div", { staticClass: "spaceout" }, [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tCurrent Dewpoint: "
+                        ),
                         _c("span", { style: { color: this.dewpoint.color } }, [
                           _vm._v(_vm._s(this.dewpoint.dew))
                         ])
@@ -55779,7 +55790,7 @@ var render = function() {
                     : _vm._e(),
                   _vm._v(" "),
                   this.dewpoint.humidity
-                    ? _c("div", [
+                    ? _c("div", { staticClass: "spaceout" }, [
                         _vm._v("\n\t\t\t\t\t\t\tRelative Humidity: "),
                         _c("span", { style: { color: this.dewpoint.color } }, [
                           _vm._v(_vm._s(this.dewpoint.humidity))
