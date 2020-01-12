@@ -1,6 +1,6 @@
 <template>
 <div>
-	
+
 	<div class="container panel panel-default" style="background-color: #fff;padding:10px; border:1px solid #ccc; margin-top: 10px;">
 		<div class="row border"
 			<div class="col-sm-6 col-md-12">
@@ -16,9 +16,9 @@
 					<div class="caption">
 						<div class="clearfix"></div>
 						<h1><span id='title'><i class="fa fa-paw greenies" aria-hidden="true"></i>&nbsp;Weather Kitty&nbsp;<i class="fa fa-paw greenies" aria-hidden="true"></i></span></h1>
-						
+
 						<h4><span id='desc'>{{this.dewpoint.desc}}</span></h4>
-						
+
 						<div id="info">
 							<img v-if="this.dewpoint.img" :src="this.dewpoint.img" height=200 width=200>
 							<div v-if="this.dewpoint.temp">
@@ -41,7 +41,7 @@
 					</p>
 					<div class="input-group col-md-6">
 						<div class="clearfix"></div>
-						<input type="text" class="form-control" id="zip" placeholder="Enter your zip code...." value="33614" size="5" v-model="zip" min="5">
+						<input type="text" class="form-control" id="zip" placeholder="Enter your zip code...." size="5" v-model="zip" min="5">
 						<span class="input-group-btn">
 							<button  @click="getWeather()" class="btn btn-primary" id="submit" type="button">Go!</button>
 						</span>
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 </div>
 </div>
 </template>
@@ -72,7 +72,7 @@ export default {
 				humidity: '',
 				sky: '',
 				color: '',
-				
+
 			}
 		}
 	},
@@ -104,7 +104,7 @@ const resp = jsonp('https://api.wunderground.com/api/'+dotenv.VUE_WUAPI+'/foreca
     console.log(data);
 
 			console.log(data);
-				const bad_hair_cat = 'http://img06.deviantart.net/2c2a/i/2013/236/5/5/doodle_237___persian_cat_by_giovannag-d6jlpei.jpg';
+				const bad_hair_cat = 'https://cdn.shopify.com/s/files/1/0344/6469/files/Screen_Shot_2017-08-18_at_3.46.44_PM.png?v=1503086296';
 
 			const good_hair_cat = 'http://i.imgur.com/ZiEBSak.jpg?1';
 			let location = data['location']['city'];
@@ -123,7 +123,7 @@ const resp = jsonp('https://api.wunderground.com/api/'+dotenv.VUE_WUAPI+'/foreca
 			self.dewpoint.humidity = humidity;
 			self.dewpoint.sky = icon_url;
 			self.dewpoint.color = color;
-    
+
   }
 });
 
