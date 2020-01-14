@@ -15,16 +15,16 @@
 					<div class="caption">
 						<div class="clearfix"></div>
 						<h1><span id='title'><i class="fa fa-paw greenies" aria-hidden="true"></i>&nbsp;Weather Kitty&nbsp;<i class="fa fa-paw greenies" aria-hidden="true"></i></span></h1>
-						
+
 						<h4><span id='desc'>{{this.dewpoint.desc}}</span></h4>
-						
+
 						<div id="info">
-							<img v-if="this.dewpoint.img" :src="this.dewpoint.img" height=200 width=200 class="spaceout"> 
+							<img v-if="this.dewpoint.img" :src="this.dewpoint.img" height=200 width=200 class="spaceout">
 							<div v-if="this.dewpoint.temp" class="spaceout">
 								{{this.dewpoint.temp}}
 							</div>
 							<div v-if="this.dewpoint.dew" class="spaceout">
-							
+
 							Current Dewpoint: <span v-bind:style="{ color: this.dewpoint.color }">{{this.dewpoint.dew}}</span>
 						</div>
 						<div v-if="this.dewpoint.humidity" class="spaceout">
@@ -49,7 +49,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 </div>
 </div>
 </template>
@@ -71,7 +71,7 @@ export default {
 				humidity: '',
 				sky: '',
 				color: '',
-				
+
 			}
 		}
 	},
@@ -97,11 +97,11 @@ export default {
 
 	 	let ld = location_json[0];
 
-	   
+
 	    let weather_response = await fetch('http://dataservice.accuweather.com/currentconditions/v1/33614?apikey='+dotenv.VUE_WUAPI+'&language=en-us&details=true');
 
 	    let weather_json = await weather_response.json();
-	    
+
 	    let wd = weather_json[0];
 
 	    const bad_hair_cat ="http://img06.deviantart.net/2c2a/i/2013/236/5/5/doodle_237___persian_cat_by_giovannag-d6jlpei.jpg";
@@ -114,7 +114,7 @@ export default {
 	    let desc = dewpoint > 65 ? "Bad hair day! Run!" : "Good hair day, good kitty!";
 	    let temp = "The Current temperature in " + city + " is: " + temp_f;
 	    let color = dewpoint > 65 ? "red" : "green";
-	     
+
 	    self.dewpoint.img = image;
 		self.dewpoint.desc = desc;
 		self.dewpoint.temp = "Current temperature in " + ld.ParentCity.EnglishName + " is: " + temp_f;
@@ -122,7 +122,7 @@ export default {
 		self.dewpoint.humidity = temp_f;
 		self.dewpoint.color = color;
 		// self.dewpoint.sky = icon_url;
-		
+
 	} catch (e) {
 		alert(e)
 	}
