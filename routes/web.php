@@ -4,6 +4,7 @@ header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 use Illuminate\Http\Request;
 use App\Thumb;
+use App\Description;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -33,7 +34,7 @@ Route::get('/thumb/{bu}', function(Request $request, $bu){
 });
 
 Route::get('profile/{bu}', function(Request $request, $bu){
-		
+
 	return DB::table('thumbs')
             ->leftJoin('description', 'description.unit', '=', 'thumbs.unit')
             ->where ('description.unit', '=', $bu)
@@ -41,9 +42,32 @@ Route::get('profile/{bu}', function(Request $request, $bu){
 });
 
 Route::get('/testimonials', function(){
-		
+
 	return DB::table('testimonials')->get()->toArray();
 
+});
+
+//for react api
+
+Route::get('/thumblist', function(){
+	return Thumb::latest()->orderBy('thumb_order', 'asc')->get();
+});
+
+Route::get('/full/{search}', function(Request $request, $search){
+	//DB::statement('ALTER TABLE description ADD FULLTEXT fulltext_index (id, description, skills, title, unit)');
+	//return Description::whereRaw('MATCH (skills) AGAINST (?)' , array($search))->get();
+
+	return DB::table('descriptions')
+            ->leftJoin('thumbs', 'thumbs.unit', '=', 'descriptions.unit')
+            ->whereRaw('MATCH (skills) AGAINST (?)' , array($search))
+            ->get();
+
+	//return Thumb::latest()->orderBy('thumb_order', 'asc')->get();
+});
+
+
+Route::get('/thumblist/{bu}', function(Request $request, $bu){
+	return Thumb::latest()->where('unit', '=', $bu)->orderBy('thumb_order', 'asc')->get();
 });
 
 
