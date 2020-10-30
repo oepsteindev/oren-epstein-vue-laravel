@@ -65,6 +65,15 @@ Route::get('/full/{search}', function(Request $request, $search){
 	//return Thumb::latest()->orderBy('thumb_order', 'asc')->get();
 });
 
+Route::get('/all', function(Request $request){
+
+
+	return DB::table('descriptions')->orderByRaw('thumb_order asc')
+            ->leftJoin('thumbs', 'thumbs.unit', '=', 'descriptions.unit')
+            ->get();
+
+});
+
 
 Route::get('/thumblist/{bu}', function(Request $request, $bu){
 	return Thumb::latest()->where('unit', '=', $bu)->orderBy('thumb_order', 'asc')->get();
