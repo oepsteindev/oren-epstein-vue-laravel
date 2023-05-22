@@ -9,6 +9,9 @@
 					:style="!this.zip ? 'height:200;' : 'height:500;'"
 					>
 					<div id="img"></div>
+                    <div class="row">
+                        Sadly, all the APIs I used to use have come and gone, and Weather Kitty doesnt work anymore. In Loving memory of my cat, Mr. Kitty T. Cat.<hr>
+                    </div>
 					<div class="row">
 						<p>Another incarnation of Weather Kitty! <br>This Vue JS app hits the Accuweather.com API, which returns a giant JSON response, that I parse so that Weather Kitty can tell you if you're going to have bad hair day or not. I've written and re-written this app with 3 API's over the years and in <a href="https://www.oepstein.a2hosted.com/reactkitty/" target="_blank">React</a> VueJS, NodeJS, VanillaJS, and Python, and its in memory of my cat, whose name was Kitty. Enter your zip code to get started!</p>
 					</div>

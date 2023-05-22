@@ -7,28 +7,31 @@
 
 
 require('./bootstrap');
+// require('./resources/js/env').config();
 
 window.Vue = require('vue');
 import {VueMasonryPlugin} from 'vue-masonry';
 import VueRouter from 'vue-router'
 
 let axios = require('axios');
-
+// const app = createApp(MyApp)
+// app.use(VueRouter)
 
 
 Vue.use(VueRouter)
 Vue.use(VueMasonryPlugin);
-Vue.component('contacts', require('./components/Contacts.vue'));
-Vue.component('dewpoint', require('./components/Dewpoint.vue'));
-Vue.component('slider', require('./components/Slider.vue'));
-Vue.component('masonry', require('./components/Masonry.vue')); 
-Vue.component('greeting', require('./components/Greeting.vue')); 
-Vue.component('testimonials', require('./components/Testimonials.vue')); 
-Vue.component('spotify', require('./components/Spotify.vue')); 
-Vue.component('skills', require('./components/Skills.vue')); 
-Vue.component('kungfu', require('./components/Kungfu.vue')); 
-Vue.component('contactme', require('./components/Contactme.vue')); 
-Vue.component('contactmefooter', require('./components/Contactmefooter.vue'));
+// Vue.component('dashboard', require('./components/Dashboard.vue').default);
+Vue.component('contacts', require('./components/Contacts.vue').default);
+Vue.component('dewpoint', require('./components/Dewpoint.vue').default);
+Vue.component('slider', require('./components/Slider.vue').default);
+Vue.component('masonry', require('./components/Masonry.vue').default);
+Vue.component('greeting', require('./components/Greeting.vue').default);
+Vue.component('testimonials', require('./components/Testimonials.vue').default);
+Vue.component('spotify', require('./components/Spotify.vue').default);
+Vue.component('skills', require('./components/Skills.vue').default);
+Vue.component('kungfu', require('./components/Kungfu.vue').default);
+Vue.component('contactme', require('./components/Contactme.vue').default);
+Vue.component('contactmefooter', require('./components/Contactmefooter.vue').default);
 
 // $.ajaxSetup({
 //     // force ajax call on all browsers
@@ -56,6 +59,7 @@ Vue.component('contactmefooter', require('./components/Contactmefooter.vue'));
 
 // 1. Define route components.
 // These can be imported from other files
+import Vue from 'vue'
 import Detail from './components/Detail.vue';
 
 // 2. Define some routes
@@ -82,30 +86,25 @@ const router = new VueRouter({
 //   router
 // }).$mount('#app')
 
- 
-//base app
+
+// base app
 const app = new Vue({
-	router,
-	el: '#app'
+  router,
+  el: '#app'
 })
 
 //masonry
 const vm = new Vue({
-  router,	
+  router,
   el: '#vue-instance',
 });
 
 //about section
-const about = new Vue({	
+const about = new Vue({
   el: '#about',
 });
 
 //footer
-const aboutFooter = new Vue({	
+const aboutFooter = new Vue({
   el: '#aboutFooter',
 });
-
-
-
-
-

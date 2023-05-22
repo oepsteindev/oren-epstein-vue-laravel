@@ -1,6 +1,6 @@
 <template>
 <div>
-	
+
 	<hr>
 	<div class="grid" >
 		<h1>Archived <span class="greenies">Web Projects</span></h1>
@@ -12,7 +12,7 @@
 							<router-link :to="{ name: 'detail',  params: { bu: post.url } }">
 							<img class="thumb grid-item" v-if="post.thumb" :src="'./oe_img/thumbs/' + post.thumb"  height='161' width='220' >
 							</router-link>
-							
+
 						</div>
 					</div>
 				</div>
@@ -25,7 +25,7 @@
 <script>
 	import imagesLoaded from 'vue-images-loaded';
 	export default {
-	
+
   data () {
     return {
     	posts: []
@@ -35,7 +35,7 @@
   mounted() {
     this.getPosts();
     console.log('fetching masonry');
-    
+
   },
   directives: {
         imagesLoaded
@@ -59,10 +59,10 @@
 					this.posts.push({'thumb': response.data[row]['thumb'], 'id':x++, 'url':response.data[row]['unit'],});
 				}
 
-				
+
 			});
   	},
-    
+
   }}
 </script>
 
